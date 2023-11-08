@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.patches import Polygon
+from matplotlib.transforms import Affine2D
+
+# Function to create a pattern similar to the Windows logo
+def create_pattern(ax):
+    # Define the coordinates for the squares
+    squares_coords = [
+        [(0.1, 0.6), (0.5, 0.6), (0.5, 1.0), (0.1, 1.0)],  # Top-left square
+        [(0.6, 0.6), (1.0, 0.6), (1.0, 1.0), (0.6, 1.0)],  # Top-right square
+        [(0.1, 0.1), (0.5, 0.1), (0.5, 0.5), (0.1, 0.5)],  # Bottom-left square
+        [(0.6, 0.1), (1.0, 0.1), (1.0, 0.5), (0.6, 0.5)]   # Bottom-right square
+    ]
+
+    # Create and add squares to the axes
+    for square_coords in squares_coords:
+        square = Polygon(square_coords, closed=True, color='blue')
+        ax.add_patch(square)
+
+# Function to display the pattern with rotation
+def display_rotating_pattern(rotation_angle):
+    # Create figure and axes
+    fig, ax = plt.subplots()
+
+    # Set aspect of the plot to equal and remove axes
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+    # Create the pattern
+    create_pattern(ax)
+
+    # Rotate the pattern
+    for patch in ax.patches:
+        patch.set_transform(patch.get_patch_transform() + Affine2D().rotate_deg_around(0.55, 0.55, rotation_angle))
+
+    # Display the pattern
+    plt.show()
+
+# Display the pattern rotated by a certain angle
+display_rotating_pattern(rotation_angle=45)
